@@ -5,17 +5,47 @@
 // Khởi tạo Object cấu trúc logic cho ứng dụng
 const App = {
     // 1. Quản lý trạng thái Giỏ hàng
+    // 1. Quản lý trạng thái Giỏ hàng (ĐÃ NÂNG CẤP DÙNG LOCALSTORAGE)
     cart: {
-        count: 0,
-        addToCart: function(id, name, price, size, qty) {
-            this.count += parseInt(qty);
-            document.getElementById('cart-count').innerText = this.count;
+        items: [], // Danh sách các sản phẩm đang có trong giỏ
+        
+        // Khởi tạo: Đọc dữ liệu từ bộ nhớ khi tải trang
+        init: function() {
+            const storedCart = localStorage.getItem('quangthanhdat_cart');
+            if (storedCart) {
+                this.items = JSON.parse(storedCart);
+            }
+            this.updateHeaderCount();
+        },
+
+        // Hàm thêm sản phẩm (Thêm tham số 'image' để lấy ảnh)
+        addToCart: function(id, name, price, size, qty, image) {
+            // Kiểm tra xem sản phẩm (cùng ID và Size) đã có trong giỏ chưa
+            let existingItem = this.items.find(item => item.id === id && item.size === size);
             
-            console.log(`Thêm giỏ hàng: ${name} - ${price}đ - Size: ${size} - SL: ${qty}`);
-            alert(`Đã thêm ${qty} áo "${name}" vào giỏ hàng.`);
+            if (existingItem) {
+                existingItem.qty += parseInt(qty); // Có rồi thì cộng dồn số lượng
+            } else {
+                // Chưa có thì thêm mới hoàn toàn
+                this.items.push({ id, name, price, size, qty: parseInt(qty), image });
+            }
+            
+            this.saveCart(); // Lưu vào bộ nhớ
+            this.updateHeaderCount(); // Cập nhật chấm đỏ trên Header
+        },
+
+        // Lưu giỏ hàng vào trình duyệt
+        saveCart: function() {
+            localStorage.setItem('quangthanhdat_cart', JSON.stringify(this.items));
+        },
+
+        // Cập nhật số lượng trên Header
+        updateHeaderCount: function() {
+            const totalQty = this.items.reduce((sum, item) => sum + item.qty, 0);
+            const countEl = document.getElementById('cart-count');
+            if(countEl) countEl.innerText = totalQty;
         }
     },
-
     // 2. Logic cho Popup Xem Nhanh (QUICKVIEW)
     quickView: {
         modal: null,

@@ -201,9 +201,11 @@
                     return; 
                 }
 
-                // Gọi hàm addToCart từ file js/main.js để nó đồng bộ số lượng lên Header
-                // Thông số giả lập: ID '999', Tên áo, Giá, Size đã chọn, Số lượng 1
-                App.cart.addToCart('999', 'SŌSHŌ Washed Black Tee', 670000, selectedSize, 1);
+                
+                // Lấy link bức ảnh đầu tiên đang hiển thị trên màn hình
+                const imgSrc = document.querySelector('.product-col-center img').src;
+                // Gửi toàn bộ dữ liệu (Bao gồm cả imgSrc) vào giỏ hàng
+                App.cart.addToCart('101', 'SŌSHŌ Washed Black Tee', 670000, selectedSize, 1, imgSrc);   
 
                 // Hiệu ứng đổi màu nút
                 const originalText = btnAddToCart.innerText;

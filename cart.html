@@ -56,30 +56,7 @@
                 </div>
 
                 <div class="cart-items-list" id="cart-items-container">
-                    
-                    <div class="cart-item" id="item-1">
-                        <div class="cart-item-image">
-                            <button class="btn-remove-item" onclick="removeCartItem('item-1', 990000)"><i class="fas fa-times"></i> Xóa</button>
-                            <img src="https://rakkiu.com/wp-content/uploads/2026/03/rkkk_009-scaled.webp" alt="BCK BBR EY HOODIE">
-                        </div>
-                        <div class="cart-item-info">
-                            <div class="info-top">
-                                <h3><a href="product-1.html">BCK BBR EY HOODIE</a></h3>
-                                <p class="item-price-total" id="price-item-1">990,000₫</p>
-                            </div>
-                            <div class="info-variant">
-                                <span class="variant-box">M <i class="fas fa-chevron-down" style="font-size:10px; margin-left:5px;"></i></span>
-                            </div>
-                            <div class="info-bottom">
-                                <p class="item-unit-price">990,000₫</p>
-                                <div class="qty-control">
-                                    <button onclick="updateQty('item-1', -1, 990000)">-</button>
-                                    <input type="number" id="qty-item-1" value="1" readonly>
-                                    <button onclick="updateQty('item-1', 1, 990000)">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     </div>
 
                 <div class="cart-note-section">
@@ -127,71 +104,94 @@
     <script src="js/main.js"></script>
 
     <script>
-        // Biến lưu tổng tiền toàn giỏ hàng hiện tại
-        let grandTotal = 990000; 
-        // Biến đếm tổng số sản phẩm
-        let totalItems = 1;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gọi hàm vẽ giỏ hàng ngay khi mở trang
+        renderCartPage();
+    });
 
-        // Hàm format tiền tệ (Ví dụ: 990000 -> 990,000₫)
-        function formatMoney(amount) {
-            return amount.toLocaleString('vi-VN') + '₫';
+    function formatMoney(amount) {
+        return amount.toLocaleString('vi-VN') + '₫';
+    }
+
+    // Hàm vẽ HTML dựa trên dữ liệu thật
+    function renderCartPage() {
+        const container = document.getElementById('cart-items-container');
+        const items = App.cart.items; // Lấy dữ liệu từ não bộ JS
+        
+        let html = '';
+        let grandTotal = 0;
+        let totalQty = 0;
+
+        // Nếu giỏ trống
+        if (items.length === 0) {
+            container.innerHTML = "<p style='padding: 20px 0; color: #888;'>Giỏ hàng của bạn đang trống. Hãy quay lại cửa hàng để tiếp tục mua sắm.</p>";
+            document.getElementById('cart-grand-total').innerText = "0₫";
+            document.getElementById('title-count').innerText = "0 sản phẩm";
+            document.getElementById('bread-count').innerText = "0";
+            return;
         }
 
-        // Cập nhật các con số hiển thị trên giao diện
-        function updateUI() {
-            document.getElementById('cart-grand-total').innerText = formatMoney(grandTotal);
-            document.getElementById('cart-count').innerText = totalItems;
-            document.getElementById('bread-count').innerText = totalItems;
-            document.getElementById('title-count').innerText = totalItems + " sản phẩm";
+        // Lặp qua từng sản phẩm khách đã thêm để tạo HTML
+        items.forEach((item, index) => {
+            let rowPrice = item.price * item.qty; // Tổng tiền của 1 dòng
+            grandTotal += rowPrice;
+            totalQty += item.qty;
+
+            html += `
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <button class="btn-remove-item" onclick="removeCartItem(${index})"><i class="fas fa-times"></i> Xóa</button>
+                        <img src="${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="cart-item-info">
+                        <div class="info-top">
+                            <h3><a href="#">${item.name}</a></h3>
+                            <p class="item-price-total">${formatMoney(rowPrice)}</p>
+                        </div>
+                        <div class="info-variant">
+                            <span class="variant-box">${item.size} <i class="fas fa-chevron-down" style="font-size:10px; margin-left:5px;"></i></span>
+                        </div>
+                        <div class="info-bottom">
+                            <p class="item-unit-price">${formatMoney(item.price)}</p>
+                            <div class="qty-control">
+                                <button onclick="changeQty(${index}, -1)">-</button>
+                                <input type="number" value="${item.qty}" readonly>
+                                <button onclick="changeQty(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Đổ HTML vào màn hình
+        container.innerHTML = html;
+        
+        // Cập nhật các con số Tổng
+        document.getElementById('cart-grand-total').innerText = formatMoney(grandTotal);
+        document.getElementById('title-count').innerText = totalQty + " sản phẩm";
+        document.getElementById('bread-count').innerText = totalQty;
+    }
+
+    // Hàm bấm nút (+ / -)
+    function changeQty(index, delta) {
+        let item = App.cart.items[index];
+        item.qty += delta;
+        if(item.qty < 1) item.qty = 1; // Không cho tụt dưới 1
+        App.cart.saveCart(); // Cập nhật bộ nhớ
+        App.cart.updateHeaderCount();
+        renderCartPage(); // Vẽ lại màn hình
+    }
+
+    // Hàm bấm nút Xóa
+    function removeCartItem(index) {
+        if(confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
+            App.cart.items.splice(index, 1); // Xóa khỏi danh sách
+            App.cart.saveCart(); // Cập nhật bộ nhớ
+            App.cart.updateHeaderCount();
+            renderCartPage(); // Vẽ lại màn hình
         }
-
-        // Hàm Tăng/Giảm số lượng
-        function updateQty(itemId, change, unitPrice) {
-            let qtyInput = document.getElementById('qty-' + itemId);
-            let currentQty = parseInt(qtyInput.value);
-            
-            // Tính số lượng mới
-            let newQty = currentQty + change;
-            
-            // Không cho giảm xuống dưới 1 (Nếu muốn xóa thì bấm nút Xóa)
-            if (newQty < 1) return; 
-
-            // Cập nhật ô input
-            qtyInput.value = newQty;
-
-            // Cập nhật giá của riêng dòng sản phẩm đó
-            let newRowPrice = newQty * unitPrice;
-            document.getElementById('price-' + itemId).innerText = formatMoney(newRowPrice);
-
-            // Cập nhật Tổng tiền giỏ hàng và Tổng số lượng
-            grandTotal += (change * unitPrice);
-            totalItems += change;
-            
-            updateUI();
-        }
-
-        // Hàm Xóa sản phẩm
-        function removeCartItem(itemId, unitPrice) {
-            if(confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
-                let itemElement = document.getElementById(itemId);
-                let qty = parseInt(document.getElementById('qty-' + itemId).value);
-                
-                // Trừ tiền và số lượng
-                grandTotal -= (qty * unitPrice);
-                totalItems -= qty;
-                
-                // Xóa HTML của sản phẩm đó đi
-                itemElement.remove();
-
-                updateUI();
-
-                // Nếu giỏ hàng trống thì báo lỗi nhỏ
-                if(totalItems === 0) {
-                    document.getElementById('cart-items-container').innerHTML = "<p style='padding: 20px 0; color: #888;'>Giỏ hàng của bạn đang trống. Hãy quay lại cửa hàng để tiếp tục mua sắm.</p>";
-                    document.getElementById('cart-grand-total').innerText = "0₫";
-                }
-            }
-        }
-    </script>
+    }
+</script>
 </body>
 </html>
