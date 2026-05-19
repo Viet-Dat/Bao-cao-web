@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SŌSHŌ Washed Black Tee - QUANGTHANHDAT</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/plugins.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .product-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start; /* Quan trọng để sticky hoạt động */
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 40px;
+            gap: 40px;
+        }
+
+        /* Cột Trái & Cột Phải - Đứng im khi cuộn */
+        .product-col-left, .product-col-right {
+            width: 25%;
+            position: sticky;
+            top: 100px; /* Cách đỉnh màn hình (header) 100px */
+        }
+
+        /* Cột Giữa - Vùng cuộn ảnh */
+        .product-col-center {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-col-center img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Định dạng Chữ */
+        .prod-title { font-size: 15px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
+        .prod-desc { font-size: 14px; color: #333; margin-bottom: 20px; }
+        .prod-details { list-style: none; padding: 0; }
+        .prod-details li { font-size: 14px; color: #333; margin-bottom: 5px; }
+        .prod-details li::before { content: '•'; margin-right: 8px; }
+        .prod-meta { margin-top: 20px; font-size: 14px; color: #333; }
+        
+        .prod-price { font-size: 15px; margin-bottom: 30px; }
+        .size-guide { font-size: 12px; text-decoration: underline; margin-bottom: 10px; display: inline-block; color: #111; }
+
+        /* Form chọn Size */
+        .size-selector {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-size: 14px;
+            margin-bottom: 20px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5" stroke="%23000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+        }
+
+        /* Nút Thêm vào giỏ */
+        .btn-add-cart {
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-add-cart:hover { background-color: #333; }
+
+        /* Responsive Mobile */
+        @media (max-width: 900px) {
+            .product-main { flex-direction: column; padding: 0 20px; }
+            .product-col-left, .product-col-center, .product-col-right { width: 100%; position: static; }
+            .product-col-center { order: -1; } /* Đưa ảnh lên đầu */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="site-logo">
+                <a href="index.html">QUANGTHANHDAT</a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li class="has-dropdown">
+                        <a href="#">ABOUT US <i class="fas fa-chevron-down"></i></a>
+                        <ul class="sub-menu">
+                            <li><a href="#">INFORMATION</a></li>
+                            <li><a href="#">CONTACT</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">SHOP <i class="fas fa-chevron-down"></i></a>
+                        <ul class="sub-menu">
+                            <li><a href="index.html">TOPS</a></li>
+                            <li><a href="outwear.html">OUTWEAR</a></li>
+                            <li><a href="collection.html">ALL PRODUCTS</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown"><a href="#">CAMPAIGN <i class="fas fa-chevron-down"></i></a></li>
+                    <li class="has-dropdown"><a href="#">WOLRWIDE SHIPPING <i class="fas fa-chevron-down"></i></a></li>
+                </ul>
+            </nav>
+
+            <div class="header-icons">
+                <a href="#"><i class="fas fa-search" style="font-size: 18px;"></i></a>
+                
+                <div class="user-icon-wrapper" id="user-wrapper">
+                    <a href="auth.html" id="user-icon-link"><i class="far fa-user" style="font-size: 19px;"></i></a>
+                    <div class="user-dropdown" id="user-dropdown-menu">
+                        <h4>THÔNG TIN TÀI KHOẢN</h4>
+                        <ul>
+                            <li><a href="account.html">• Tài khoản của tôi</a></li>
+                            <li><a href="#">• Danh sách địa chỉ</a></li>
+                            <li><a href="#" id="btn-logout-header">• Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="cart.html" class="cart-icon-wrapper" id="cart-drawer-trigger">
+                    <img class="cart-img-icon" alt="Cart" src="https://rakkiu.com/wp-content/uploads/2022/07/shopping-bag.png" style="width: 22px;">
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="product-main">
+        
+        <div class="product-col-left">
+            <h1 class="prod-title">SŌSHŌ Washed Black Tee</h1>
+            <p class="prod-desc">Washed Cotton Jersey T-shirt. Fading throughout.</p>
+            
+            <ul class="prod-details">
+                <li>Rib knit crewneck</li>
+                <li>Dropped shoulders</li>
+                <li>Logo and graphics printed at front and back</li>
+                <li>Fading throughout</li>
+            </ul>
+            
+            <p class="prod-meta">Color: Washed Black<br><br>Fabric 100% cotton.</p>
+        </div>
+
+        <div class="product-col-center">
+            <img src="https://rakkiu.com/wp-content/uploads/2026/05/DSC02059-scaled.webp" alt="Mặt trước">
+            <img src="https://rakkiu.com/wp-content/uploads/2026/05/DSC02072-scaled.webp" alt="Mặt sau">
+            <img src="https://rakkiu.com/wp-content/uploads/2026/05/DSC02072-scaled.webp" alt="Chi tiết 1" style="filter: brightness(0.9);">
+        </div>
+
+        <div class="product-col-right">
+            <p class="prod-price">670,000₫</p>
+            
+            <a href="#" class="size-guide">SIZE GUIDE</a>
+            
+            <select class="size-selector" id="product-size">
+                <option value="" disabled selected>Choose an option</option>
+                <option value="S">Size S</option>
+                <option value="M">Size M</option>
+                <option value="L">Size L</option>
+                <option value="XL">Size XL</option>
+            </select>
+
+            <button class="btn-add-cart" id="btn-add-to-cart">THÊM VÀO GIỎ HÀNG</button>
+        </div>
+
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnAddToCart = document.getElementById('btn-add-to-cart');
+            const sizeSelector = document.getElementById('product-size');
+            
+            btnAddToCart.addEventListener('click', function() {
+                const selectedSize = sizeSelector.value;
+                if (!selectedSize) {
+                    alert("Vui lòng chọn Kích thước (Size) trước khi thêm vào giỏ hàng!");
+                    return; 
+                }
+
+                // Gọi hàm addToCart từ file js/main.js để nó đồng bộ số lượng lên Header
+                // Thông số giả lập: ID '999', Tên áo, Giá, Size đã chọn, Số lượng 1
+                App.cart.addToCart('999', 'SŌSHŌ Washed Black Tee', 670000, selectedSize, 1);
+
+                // Hiệu ứng đổi màu nút
+                const originalText = btnAddToCart.innerText;
+                btnAddToCart.innerText = "ĐÃ THÊM THÀNH CÔNG ✓";
+                btnAddToCart.style.backgroundColor = "#28a745"; 
+                
+                setTimeout(() => {
+                    btnAddToCart.innerText = originalText;
+                    btnAddToCart.style.backgroundColor = "#000"; 
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>     

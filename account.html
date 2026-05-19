@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài khoản - BACYKISM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="account-page">
+
+    <header class="account-header">
+        <div class="container">
+            <h2><a href="index.html" style="color: #fff;">Bacykism</a></h2>
+        </div>
+    </header>
+
+    <main class="account-main container">
+        <div class="account-layout">
+            
+            <aside class="account-sidebar">
+                <div class="account-user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <p class="user-name">-</p>
+                        <p class="user-email" id="display-user-email">vietdat2710200@gmail.com</p>
+                    </div>
+                </div>
+
+                <nav class="account-nav">
+                    <a href="#" class="nav-item"><i class="far fa-user-circle"></i> Thông tin tài khoản <i class="fas fa-chevron-right arrow"></i></a>
+                    <a href="#" class="nav-item active"><i class="fas fa-list-ul"></i> Lịch sử đơn hàng <i class="fas fa-chevron-right arrow"></i></a>
+                    <a href="#" class="nav-item"><i class="fas fa-map-marker-alt"></i> Địa chỉ đã lưu <i class="fas fa-chevron-right arrow"></i></a>
+                    <a href="#" class="nav-item"><i class="far fa-star"></i> Đánh giá đơn hàng <i class="fas fa-chevron-right arrow"></i></a>
+                    <div class="nav-footer-info">
+                        <p><i class="far fa-envelope"></i> Email liên hệ <span>bacykism@gmail.com</span></p>
+                        <p><i class="fas fa-globe"></i> Website <a href="index.html" style="color: #f1d471;">Quay lại Trang chủ</a></p>
+                        <button id="btn-logout" class="btn-logout">Đăng xuất</button>
+                    </div>
+                </nav>
+            </aside>
+
+            <section class="account-content">
+                <h3>Lịch sử đơn hàng</h3>
+                <div class="order-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Tìm theo mã đơn hàng hoặc tên sản phẩm">
+                </div>
+                
+                <div class="order-tabs">
+                    <button class="tab-btn active">Chờ xác nhận</button>
+                    <button class="tab-btn">Chờ lấy hàng</button>
+                    <button class="tab-btn">Đang giao hàng</button>
+                    <button class="tab-btn">Đã giao</button>
+                    <button class="tab-btn">Trả hàng</button>
+                    <button class="tab-btn">Đã huỷ</button>
+                </div>
+
+                <div class="order-list-empty">
+                    <div class="empty-icon">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <p>Bạn chưa có đơn hàng nào</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

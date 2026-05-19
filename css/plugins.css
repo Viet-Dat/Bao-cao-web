@@ -1,0 +1,16 @@
+/* ==================================================
+   [css/plugins.css]
+   File này tự động kéo các thư viện CSS chuẩn về
+================================================== */
+
+/* 1. Font Awesome (Thư viện icon: giỏ hàng, user, kính lúp...) */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+/* 2. Swiper CSS (Thư viện làm hiệu ứng trượt/slide ảnh) */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.4/swiper-bundle.min.css');
+
+/* 3. Animate.css (Thư viện làm hiệu ứng mượt mà khi hover/chuyển trang) */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+/* 4. Bootstrap 4 Grid (Chỉ lấy phần chia lưới để chia cột responsive) */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap-grid.min.css');

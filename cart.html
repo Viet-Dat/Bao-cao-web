@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - QUANGTHANHDAT</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/plugins.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="site-logo"><a href="index.html">QUANGTHANHDAT</a></div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="has-dropdown"><a href="#">ABOUT US <i class="fas fa-chevron-down"></i></a></li>
+                    <li class="has-dropdown">
+                        <a href="#">SHOP <i class="fas fa-chevron-down"></i></a>
+                        <ul class="sub-menu">
+                            <li><a href="index.html">TOPS</a></li>
+                            <li><a href="outwear.html">OUTWEAR</a></li>
+                            <li><a href="collection.html">ALL PRODUCTS</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown"><a href="#">CAMPAIGN <i class="fas fa-chevron-down"></i></a></li>
+                    <li class="has-dropdown"><a href="#">WOLRWIDE SHIPPING <i class="fas fa-chevron-down"></i></a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <a href="#"><i class="fas fa-search" style="font-size: 18px;"></i></a>
+                <div class="user-icon-wrapper" id="user-wrapper">
+                    <a href="auth.html" id="user-icon-link"><i class="far fa-user" style="font-size: 19px;"></i></a>
+                </div>
+                <a href="cart.html" class="cart-icon-wrapper">
+                    <img class="cart-img-icon" alt="Cart" src="https://rakkiu.com/wp-content/uploads/2022/07/shopping-bag.png" style="width: 22px;">
+                    <span class="cart-count" id="cart-count">1</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="padding-top: 20px;">
+        <p style="font-size: 13px; color: #666;">Trang chủ / <span style="color: #000;">Giỏ hàng (<span id="bread-count">1</span>)</span></p>
+    </div>
+
+    <main class="cart-page">
+        <div class="container cart-layout">
+            
+            <div class="cart-left">
+                <div class="cart-header">
+                    <h2>Giỏ hàng của bạn</h2>
+                    <p>Bạn đang có <strong id="title-count">1 sản phẩm</strong> trong giỏ hàng</p>
+                </div>
+
+                <div class="cart-items-list" id="cart-items-container">
+                    
+                    <div class="cart-item" id="item-1">
+                        <div class="cart-item-image">
+                            <button class="btn-remove-item" onclick="removeCartItem('item-1', 990000)"><i class="fas fa-times"></i> Xóa</button>
+                            <img src="https://rakkiu.com/wp-content/uploads/2026/03/rkkk_009-scaled.webp" alt="BCK BBR EY HOODIE">
+                        </div>
+                        <div class="cart-item-info">
+                            <div class="info-top">
+                                <h3><a href="product-1.html">BCK BBR EY HOODIE</a></h3>
+                                <p class="item-price-total" id="price-item-1">990,000₫</p>
+                            </div>
+                            <div class="info-variant">
+                                <span class="variant-box">M <i class="fas fa-chevron-down" style="font-size:10px; margin-left:5px;"></i></span>
+                            </div>
+                            <div class="info-bottom">
+                                <p class="item-unit-price">990,000₫</p>
+                                <div class="qty-control">
+                                    <button onclick="updateQty('item-1', -1, 990000)">-</button>
+                                    <input type="number" id="qty-item-1" value="1" readonly>
+                                    <button onclick="updateQty('item-1', 1, 990000)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                <div class="cart-note-section">
+                    <h4>Ghi chú đơn hàng</h4>
+                    <textarea placeholder=""></textarea>
+                    <label class="invoice-checkbox">
+                        <input type="checkbox"> Xuất hoá đơn cho đơn hàng
+                    </label>
+                </div>
+            </div>
+
+            <div class="cart-right">
+                <div class="order-summary-box">
+                    <h3>Thông tin đơn hàng</h3>
+                    <div class="summary-total">
+                        <span>Tổng tiền:</span>
+                        <strong class="total-price" id="cart-grand-total">990,000₫</strong>
+                    </div>
+                    <p class="summary-note">• Phí vận chuyển sẽ được tính ở trang thanh toán.</p>
+                    <button class="btn-checkout">THANH TOÁN</button>
+                </div>
+
+                <div class="policy-box">
+                    <strong>Chính sách mua hàng:</strong>
+                    <p>Hiện chúng tôi chỉ áp dụng thanh toán với đơn hàng có giá trị tối thiểu <strong>400.000₫</strong> trở lên.</p>
+                </div>
+
+                <div class="promo-box">
+                    Khuyến mãi dành cho bạn
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="site-footer" style="margin-top: 80px;">
+        <div class="footer-bottom">
+            <div class="container" style="text-align: center; padding: 20px 0; border-top: 1px solid #eee;">
+                <p>Copyright © 2026 QUANGTHANHDAT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        // Biến lưu tổng tiền toàn giỏ hàng hiện tại
+        let grandTotal = 990000; 
+        // Biến đếm tổng số sản phẩm
+        let totalItems = 1;
+
+        // Hàm format tiền tệ (Ví dụ: 990000 -> 990,000₫)
+        function formatMoney(amount) {
+            return amount.toLocaleString('vi-VN') + '₫';
+        }
+
+        // Cập nhật các con số hiển thị trên giao diện
+        function updateUI() {
+            document.getElementById('cart-grand-total').innerText = formatMoney(grandTotal);
+            document.getElementById('cart-count').innerText = totalItems;
+            document.getElementById('bread-count').innerText = totalItems;
+            document.getElementById('title-count').innerText = totalItems + " sản phẩm";
+        }
+
+        // Hàm Tăng/Giảm số lượng
+        function updateQty(itemId, change, unitPrice) {
+            let qtyInput = document.getElementById('qty-' + itemId);
+            let currentQty = parseInt(qtyInput.value);
+            
+            // Tính số lượng mới
+            let newQty = currentQty + change;
+            
+            // Không cho giảm xuống dưới 1 (Nếu muốn xóa thì bấm nút Xóa)
+            if (newQty < 1) return; 
+
+            // Cập nhật ô input
+            qtyInput.value = newQty;
+
+            // Cập nhật giá của riêng dòng sản phẩm đó
+            let newRowPrice = newQty * unitPrice;
+            document.getElementById('price-' + itemId).innerText = formatMoney(newRowPrice);
+
+            // Cập nhật Tổng tiền giỏ hàng và Tổng số lượng
+            grandTotal += (change * unitPrice);
+            totalItems += change;
+            
+            updateUI();
+        }
+
+        // Hàm Xóa sản phẩm
+        function removeCartItem(itemId, unitPrice) {
+            if(confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
+                let itemElement = document.getElementById(itemId);
+                let qty = parseInt(document.getElementById('qty-' + itemId).value);
+                
+                // Trừ tiền và số lượng
+                grandTotal -= (qty * unitPrice);
+                totalItems -= qty;
+                
+                // Xóa HTML của sản phẩm đó đi
+                itemElement.remove();
+
+                updateUI();
+
+                // Nếu giỏ hàng trống thì báo lỗi nhỏ
+                if(totalItems === 0) {
+                    document.getElementById('cart-items-container').innerHTML = "<p style='padding: 20px 0; color: #888;'>Giỏ hàng của bạn đang trống. Hãy quay lại cửa hàng để tiếp tục mua sắm.</p>";
+                    document.getElementById('cart-grand-total').innerText = "0₫";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
